@@ -14,7 +14,7 @@ durations = []
 i = 0
 
 doc.search('note').each do |note|
-	break if i > 1000
+	break if i > 2000
 
 	note_name = note.search("step").inner_text
 	note_name += "S" if note.search("alter").inner_text == "1"
