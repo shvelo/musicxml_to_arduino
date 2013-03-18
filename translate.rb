@@ -25,7 +25,7 @@ end
 
 quarter_note = 60.0  / tempo / divisions * 1000.0
 
-delay = 0
+delay = quarter_note
 
 doc.search('measure').each do |measure|
 

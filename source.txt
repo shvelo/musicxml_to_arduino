@@ -15,17 +15,9 @@ void loop() {
     int noteDuration = durations[thisNote];
     tone(8, notes[thisNote],noteDuration);
 
-    int pauseBetweenNotes;
-  
-    if(delays[thisNote] == 0) {
-      pauseBetweenNotes = noteDuration;
-    } else {
-      pauseBetweenNotes = delays[thisNote];
-    }
-
-    delay(pauseBetweenNotes);
+    delay(delays[thisNote]);
     noTone(8);
   }
-  
+
   delay (100);
 }
