@@ -13,7 +13,6 @@ void setup() {
 
 void loop() {
   for (int thisNote = 0; thisNote < sizeof(notes) + 1; thisNote++) {
-
     int noteDuration = durations[thisNote];
     tone(8, notes[thisNote],noteDuration);
 
@@ -21,4 +20,7 @@ void loop() {
     delay(pauseBetweenNotes);
     noTone(8);
   }
+  noTone(8);
+  
+  delay (100);
 }

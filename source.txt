@@ -19,4 +19,8 @@ void loop() {
     delay(pauseBetweenNotes);
     noTone(8);
   }
+
+  noTone(8);
+  
+  delay (100);
 }
