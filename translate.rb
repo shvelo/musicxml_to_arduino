@@ -18,27 +18,29 @@ doc.search('note').each do |note|
 	if note_name.length > 0 then
 		notes.push note_name.upcase
 		
-		duration = note.search("duration").inner_text
+		x_duration = note.search("duration").inner_text
 
-		if duration.length < 1 then
-			type = note.search("type").inner_text
-			case type
-				when "whole"
-					duration = 1000
-				when "half"
-					duration = 1000 / 2
-				when "quarter"
-					duration = 1000 / 4
-				when "eighth"
-					duration = 1000 / 8
-				else
-					duration = 1000
-			end
+		type = note.search("type").inner_text
+		case type
+			when "whole"
+				duration = 1000
+			when "half"
+				duration = 1000 / 2
+			when "quarter"
+				duration = 1000 / 4
+			when "eighth"
+				duration = 1000 / 8
+			else
+				duration = 1000
 		end
+		
+		duration = x_duration if x_duration.to_i < duration.to_i
 
 		durations.push duration.to_s
 	end
 end
+
+
 
 output = "int notes[] = {"
 notes.each do |note|
@@ -48,11 +50,20 @@ output += "};\n"
 
 output += "int durations[] = {"
 durations.each do |duration|
+	duration = "0" if duration.length < 1
 	output += duration + ","
 end
 output += "};\n"
 
-output += "int melody_size = #{notes.length};"
+output += "int melody_size = #{notes.length};\n"
+
+time = doc.search "time"
+
+beats = time.search("beats").inner_text.to_i
+beat_type = time.search("beat-type").inner_text.to_i
+
+pause_mult = (1.0 / beats) + 1
+output += "float pause_mult = #{pause_mult};\n"
 
 out = File.open "melody.txt", "w"
 out.write output
