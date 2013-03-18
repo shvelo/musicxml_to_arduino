@@ -11,7 +11,11 @@ doc = Nokogiri::XML file
 notes = []
 durations = []
 
+i = 0
+
 doc.search('note').each do |note|
+	break if i > 1000
+
 	note_name = note.search("step").inner_text
 	note_name += "S" if note.search("alter").inner_text == "1"
 	note_name += note.search("octave").inner_text
@@ -38,6 +42,8 @@ doc.search('note').each do |note|
 
 		durations.push duration.to_s
 	end
+
+	i += 1
 end
 
 
