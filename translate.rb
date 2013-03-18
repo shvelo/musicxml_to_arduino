@@ -52,6 +52,8 @@ durations.each do |duration|
 end
 output += "};\n"
 
+output += "int melody_size = #{notes.length};"
+
 out = File.open "melody.txt", "w"
 out.write output
 out.close
