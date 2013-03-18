@@ -20,7 +20,7 @@ doc.search('note').each do |note|
 		
 		duration = note.search("duration").inner_text
 
-		if duration.length < 1 do
+		if duration.length < 1 then
 			type = note.search("type").inner_text
 			case type
 				when "whole"
