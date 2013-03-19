@@ -10,7 +10,6 @@ doc = Nokogiri::XML file
 
 notes = []
 durations = []
-delays = []
 
 i = 0
 
@@ -25,16 +24,7 @@ end
 
 quarter_note = 60.0  / tempo / divisions * 1000.0
 
-delay = quarter_note
-
 doc.search('measure').each do |measure|
-
-	rest = measure.css("rest").first
-
-	if rest then
-		delay = rest.parent.search("duration").inner_text.to_i
-		delay = delay * quarter_note
-	end
 
 	measure.search('note').each do |note|
 		break if i > 2000
@@ -42,7 +32,7 @@ doc.search('measure').each do |measure|
 		note_name = note.search("step").inner_text
 		note_name += "S" if note.search("alter").inner_text == "1"
 		note_name += note.search("octave").inner_text
-		if note_name.length > 0 then
+		note_name = "0" if note_name.length < 0
 			notes.push note_name.upcase
 			
 			duration = note.search("duration").inner_text
@@ -66,9 +56,6 @@ doc.search('measure').each do |measure|
 			
 			durations.push duration.to_s
 
-			delays.push delay.to_s
-		end
-
 		i += 1
 	end
 
@@ -85,13 +72,6 @@ output += "int durations[] = {"
 durations.each do |duration|
 	duration = "0" if duration.length < 1
 	output += duration + ","
-end
-output += "};\n"
-
-output += "int delays[] = {"
-delays.each do |delay|
-	delay = "0" if delay.to_i < 1
-	output += delay + ","
 end
 output += "};\n"
 
