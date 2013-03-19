@@ -15,7 +15,7 @@ void loop() {
     int noteDuration = durations[thisNote];
     tone(8, notes[thisNote],noteDuration);
 
-    delay(delays[thisNote]);
+    delay(noteDuration);
     noTone(8);
   }
 
